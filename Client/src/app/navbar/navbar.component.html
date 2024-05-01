@@ -1,0 +1,56 @@
+<nav *ngIf="!isHidden" class="navbar navbar-expand-lg bg-primary p-lg-0 sticky-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Formable</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <div class="navbar-text ms-auto fs-14">
+        <div class="d-flex gap-3">
+          <ul class="navbar-nav main-nav mb-lg-0 gap-md-4">
+            <li class="nav-item" *ngIf="loggedIn">
+              <a class="nav-link active" aria-current="page" [routerLink]="['/']">Home</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedIn && isAdmin">
+              <a class="nav-link active" aria-current="page" [routerLink]="['/admin/quiz']">Quiz</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedIn && isAdmin">
+              <a class="nav-link active" aria-current="page" [routerLink]="['/admin/users']">Users</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedIn && isAdmin">
+              <a class="nav-link" [routerLink]="['/admin/result-analysis']">Result Analysis</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedIn && !isAdmin">
+              <a class="nav-link" [routerLink]="['/result']">Results</a>
+            </li>
+            <li class="nav-item" *ngIf="!loggedIn">
+              <a class="nav-link fs-14" [routerLink]="['/login']">
+                <i class="fa-solid fa-arrow-right-to-bracket pe-2"></i>
+                Login
+              </a>
+            </li>
+          </ul>
+          <div class="pe-3" *ngIf="loggedIn">
+            <div class="dropdown">
+              <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                <img [ngSrc]="'https://randomuser.me/api/portraits/thumb/'+randomImage" alt="" width="32" height="32"
+                     class="rounded-circle me-2">
+                <span>{{ isAdmin ? 'Admin' : user.name }}</span>
+              </a>
+              <ul class="dropdown-menu fs-14 shadow">
+                <li><a class="dropdown-item" [routerLink]="['/profile']">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>

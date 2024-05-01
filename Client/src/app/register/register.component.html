@@ -1,0 +1,28 @@
+<main class="form-signin w-100 mx-auto mt-5 d-flex justify-content-center" style="padding-top: 8%">
+  <form (ngSubmit)="onRegister()" style="max-width: 450px;width: 50%;min-width: 300px">
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating mb-2">
+      <input type="text" name="name" [(ngModel)]="data.name" class="form-control" id="floatingInput1"
+             placeholder="full name">
+      <label for="floatingInput">Full name</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input type="email" class="form-control" name="email" [(ngModel)]="data.email" id="floatingInput"
+             placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input type="password" name="password" [(ngModel)]="data.password" class="form-control" id="floatingPassword"
+             placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+    <p class="mt-3 mb-3 text-body-secondary fs-14">
+      Already have an account <a href="/login">Login</a> .
+    </p>
+  </form>
+</main>

@@ -1,0 +1,8 @@
+<div *ngIf="isActive" class="alert alert-success position-absolute end-0 m-2 shadow"
+     [class.alert-success]="type==='success'"
+     [class.alert-danger]="type==='danger'"
+     role="alert">
+  <i class="fa-solid fa-check" *ngIf="type==='success'"></i>
+  <i class="fa-solid fa-triangle-exclamation" *ngIf="type==='danger'"></i>
+  <span class="ps-3">{{ msg }}</span>
+</div>

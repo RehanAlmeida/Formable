@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="container w-100 d-flex justify-content-center align-items-center">
+    <form (ngSubmit)="updateUser()" style="max-width: 450px;width: 50%;min-width: 300px">
+      <h1 class="h3 mb-3 fw-normal">Update User Profile</h1>
+
+      <div class="form-floating mb-2" *ngIf="!isAdmin">
+        <input type="text" name="name" [(ngModel)]="data.name" class="form-control" id="floatingInput1"
+               placeholder="full name">
+        <label for="floatingInput">Full name</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="email" class="form-control" name="email" [(ngModel)]="data.email" id="floatingInput"
+               placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="password" name="password" [(ngModel)]="currentPwd" class="form-control" id="floatingPassword"
+               placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="password" name="password" [(ngModel)]="newPassword" class="form-control" id="floatingPassword1"
+               placeholder="Password">
+        <label for="floatingPassword">New Password</label>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2" type="submit">Save</button>
+    </form>
+  </div>
+
+
+</div>

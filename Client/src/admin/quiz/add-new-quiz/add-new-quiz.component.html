@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <div class="container w-100 mt-3">
+    <form #addFrom="ngForm" (ngSubmit)="onSubmit()" class="mx-auto mb-5" style="max-width: 600px">
+      <h3 class="ff-open-sans">Create New Quiz</h3>
+      <hr>
+      <div class="form-group" [class.error-border]="!title.valid && title.touched"
+           [class.success-border]="title.valid && title.touched">
+        <label for="title" class="fs-14 my-2">Quiz Title</label>
+        <input minlength="3" type="text" #title="ngModel"
+               class="form-control"
+               id="title" [(ngModel)]="quiz.title" name="title"
+               placeholder="A Title for the new quiz"
+               required>
+        <div [hidden]="title.valid || title.untouched" class="err-msg">
+          Title is required and should be greater than 3 characters
+        </div>
+      </div>
+
+      <div class="mt-3">
+
+      </div>
+      <h5 class="ff-open-sans">Questions</h5>
+      <hr>
+      <div class="questions mb-3">
+        <div *ngFor="let question of questions; let i = index" class="my-3 bg-body-secondary p-3">
+          <h6 class="d-flex flex-row justify-content-between">
+            <span>Question {{ i + 1 }}</span>
+            <div>
+              <button type="button" class="btn btn-sm btn-danger" (click)="removeQuestion(i)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </h6>
+          <div class="form-group my-2">
+            <label class="fs-14 my-2" for="type">Question Type</label>
+            <select class="form-control" id="type" [(ngModel)]="question.type" name="questions[{{i}}].type" required>
+              <option value="multiple-choice">Multiple Choice</option>
+              <option value="true/false">True/False</option>
+              <option value="fill-in-the-blank">Fill in the blank</option>
+            </select>
+          </div>
+          <div class="form-group my-2" [class.error-border]="!ques.valid && ques.touched"
+               [class.success-border]="ques.valid && ques.touched">
+            <label class="fs-14 my-2" for="question">Question Text</label>
+            <textarea minlength="3"
+                      (change)="onQuestionChange()"
+                      #ques="ngModel"
+                      class="form-control" id="question" [(ngModel)]="question.question"
+                      name="questions[{{i}}].question"
+                      required></textarea>
+            <div [hidden]="ques.valid || ques.untouched" class="err-msg">
+              Question is required and should be greater than 3 characters
+            </div>
+          </div>
+          <!--          options - multiple choice-->
+          <div *ngIf="question.type === 'multiple-choice'">
+            <div class="form-group my-2"
+                 [class.error-border]="!answer.valid && answer.touched"
+                 [class.success-border]="answer.valid && answer.touched">
+              <label class="fs-14 my-2" for="answer">Answer</label>
+              <input (change)="onQuestionChange()" #answer="ngModel" type="text" class="form-control" id="answer"
+                     [(ngModel)]="question.answer"
+                     name="questions[{{i}}].answer" required>
+              <div [hidden]="answer.valid || answer.untouched" class="err-msg">
+                Answer is required
+              </div>
+            </div>
+
+            <div class="my-2">
+              <h6>Answer Options</h6>
+              <div *ngFor="let option of question.options; let j = index; trackBy:customTrackBy"
+                   class="d-flex flex-row align-items-center gap-2 my-2">
+                <div style="width: 30px" class="d-flex align-items-center justify-content-center fw-bold">
+                  <span class="pe-3">{{ j + 1 }}</span>
+                </div>
+                <input (change)="onOptionChange()" type="text" id="option" class="form-control"
+                       [(ngModel)]="question.options[j]"
+                       name="questions[{{i}}].options[{{j}}]" required>
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeOption(i,j)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+              <button type="button" class="btn btn-sm btn-info my-3" (click)="addOption(i)">
+                <i class="fa-solid fa-plus"></i>Add Option
+              </button>
+              <span class="err-msg mx-5">{{ optionError }}</span>
+            </div>
+          </div>
+
+          <!--          options - true/false-->
+
+          <div *ngIf="question.type === 'true/false'">
+            <label class="fs-14 my-2" for="answer1">Answer</label>
+            <div id="answer1" class="d-flex flex-row gap-5">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" [(ngModel)]="question.answer" [value]="true"
+                       id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  True
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" [(ngModel)]="question.answer" [value]="false"
+                       id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  False
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!--          fill-in-the-blank-->
+          <div *ngIf="question.type === 'fill-in-the-blank'">
+            <div class="form-group my-2"
+                 [class.error-border]="!answer.valid && answer.touched"
+                 [class.success-border]="answer.valid && answer.touched">
+              <label class="fs-14 my-2" for="answer">Answer</label>
+              <input (change)="onQuestionChange()" #answer="ngModel" type="text" class="form-control" id="answer"
+                     [(ngModel)]="question.answer"
+                     name="questions[{{i}}].answer" required>
+              <div [hidden]="answer.valid || answer.untouched" class="err-msg">
+                Answer is required
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-sm btn-warning" (click)="addNewQuestion()">
+            <i class="fa-solid fa-plus"></i> Add Question
+          </button>
+        </div>
+        <div class="err-msg mx-5 text-center py-3">{{ questionError }}</div>
+      </div>
+      <div class="d-flex flex-row justify-content-end">
+        <button class="btn btn-success">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

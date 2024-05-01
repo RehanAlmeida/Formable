@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div>
+    <h3 class="ff-open-sans text-center my-3">User Management</h3>
+  </div>
+  <div class="container">
+    <table *ngIf="users.length >= 1;else noQuiz" class="table table-bordered table-striped mt-3 mx-auto"
+           style="max-width: 800px">
+      <thead>
+      <tr class="fs-14 fw-light">
+        <th scope="col">#</th>
+        <th scope="col" width="250px">User Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">User Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let q of users;let i=index" class="fs-14 small">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ q.name ? q.name : 'Super Admin' }}</td>
+        <td>{{ q.email }}</td>
+        <td>{{ q.user_type === 0 ? 'Super Admin' : 'Student' }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <ng-template #noQuiz>
+      <div class="text-danger pt-5 text-center h6">Currently there are no users present</div>
+    </ng-template>
+  </div>
+</div>

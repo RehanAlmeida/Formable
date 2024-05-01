@@ -1,0 +1,84 @@
+<div class="container-fluid m-0 p-0">
+  <div class="container w-100 d-flex justify-content-center my-3" *ngIf="!isAdmin">
+    <div class="container w-100 flex-column d-flex justify-content-center my-3" *ngIf="allQuiz.length > 0;else noQuiz">
+      <h3>All active quizzes</h3>
+      <hr>
+      <div class="row gap-2 w-100">
+        <div class="col col-6 col-md-3" *ngFor="let q of allQuiz">
+          <div class="card w-100" style="max-width: 300px;min-width: fit-content">
+            <div class="card-header">
+              {{ q.quiz.title }}
+            </div>
+            <div class="card-body">
+              <div class="d-flex flex-column fs-12">
+              <span>
+                Questions: {{ q.quiz.questions.length }}
+              </span>
+                <span>
+                Participants: {{ q.quiz.participants.length }}
+              </span>
+                <span>
+                Quiz created on: <span class="fs-12">{{ q.quiz.createdAt | date:'short' }}</span>
+              </span>
+              </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+              <button [disabled]="q.isParticipated" (click)="startQuizSession(q.quiz._id)"
+                      class="btn btn-sm btn-success">
+                Start
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noQuiz>
+      <h5 class="text-danger">There are no active quiz present</h5>
+    </ng-template>
+
+  </div>
+
+  <div *ngIf="isAdmin">
+    <div class="h3 text-center my-3">
+      ADMIN DASHBOARD
+    </div>
+    <div class="container d-flex justify-content-center align-items-center" style="max-width: 1000px">
+      <div class="row my-3 gap-2">
+
+        <div class="col-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              No.of Quizzes
+            </div>
+            <div class="card-body">
+              <span class="fs-26 fw-bold">{{ allQuiz.length }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              No.of Active Quizzes
+            </div>
+            <div class="card-body">
+              <span class="fs-26 fw-bold">{{ getActiveQuizzes() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              No.of Users
+            </div>
+            <div class="card-body">
+              <span class="fs-26 fw-bold"> {{ allUsers.length }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

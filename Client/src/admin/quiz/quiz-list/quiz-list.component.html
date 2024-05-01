@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="container mt-3">
+    <table *ngIf="allQuiz.length >= 1;else noQuiz" class="table table-bordered table-striped mt-3">
+      <thead>
+      <tr class="fs-14 fw-light">
+        <th scope="col">#</th>
+        <th scope="col" width="250px">Quiz Title</th>
+        <th scope="col">Created On</th>
+        <th scope="col">Participants</th>
+        <th scope="col">Current Status</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let q of allQuiz;let i=index" class="fs-14 small">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ q.title }}</td>
+        <td>{{ q.createdAt | date:'short' }}</td>
+        <td>{{ q.participants.length }} students</td>
+        <td>{{ q.status ? 'Active' : 'Not Active' }}</td>
+        <td class="d-flex gap-2">
+          <button (click)="startQuiz(q)" class="btn btn-success btn-sm fs-12" *ngIf="!q.status">
+            <i class="fa-solid fa-play pe-2"></i> Start
+          </button>
+          <button (click)="endQuiz(q)" class="btn btn-warning btn-sm fs-12" *ngIf="q.status">
+            <i class="fa-solid fa-stop pe-2"></i> Stop
+          </button>
+          <button (click)="deleteQuiz(q._id)" class="btn btn-danger btn-sm fs-12">
+            <i class="fa-solid fa-trash pe-2"></i> Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <ng-template #noQuiz>
+      <div class="text-danger pt-5 text-center h6">Currently there are no quiz present</div>
+    </ng-template>
+  </div>
+</div>
