@@ -1,0 +1,53 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.prepareEmail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const sendEmail = (email, subject, body) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer_1.default.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        service: 'gmail',
+        auth: {
+            user: process.env.GMAIL_EMAIL,
+            pass: process.env.GMAIL_PASSWORD,
+        },
+    });
+    const mailOptions = {
+        from: process.env.GMAIL_EMAIL,
+        to: email,
+        subject: subject,
+        html: body,
+    };
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+        }
+        else {
+            console.log('Verification email sent successfully!');
+        }
+    });
+});
+const prepareEmail = (email, subject, body) => __awaiter(void 0, void 0, void 0, function* () {
+    if (subject === 'user') {
+        subject = 'New user added to the application';
+    }
+    if (subject === 'quiz') {
+        subject = 'New quiz added to the application';
+    }
+    yield sendEmail(email, subject, body);
+});
+exports.prepareEmail = prepareEmail;
