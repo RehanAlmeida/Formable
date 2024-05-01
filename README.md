@@ -21,4 +21,5 @@ npm run dev
 https://myaccount.google.com/apppasswords
 
 also create an app password for email, for sending alert mail to users
-then add the email and generated key as pass in the .env file in 
+then add the email and generated key as pass in the .env file
+
