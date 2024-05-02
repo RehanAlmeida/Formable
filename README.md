@@ -1,5 +1,5 @@
 # Formable
-A quiz application 
+A quiz application made using MEAN Stack and MongoDB.
 # Installation
 cd client 
 
